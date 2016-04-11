@@ -3,15 +3,15 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>br.edu.unirg</groupId>
-    <artifactId>Projeto2</artifactId>
+    <artifactId>Projeto3</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
 
-    <name>Projeto2</name>
+    <name>Projeto3</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <mainClass>br.edu.unirg.projeto2.MainApp</mainClass>
+        <mainClass>br.edu.unirg.projeto.MainApp</mainClass>
     </properties>
 
     <organization>

@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.edu.unirg.projeto2.tela2;
+package br.edu.unirg.projeto.tela2;
 
-import br.edu.unirg.projeto2.MainApp;
+import br.edu.unirg.projeto.MainApp;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -34,9 +34,9 @@ public class Tela2Presenter implements Initializable {
     private void confirmarNome(ActionEvent event) {
         String nome = textNome.getText();
         if(indexToEdit == null) {
-            MainApp.getTela1View().getRealPresenter().getListviewNomes().getItems().add(nome);
+            //MainApp.getTela1View().getRealPresenter().getListviewNomes().getItems().add(nome);
         } else {
-            MainApp.getTela1View().getRealPresenter().getListviewNomes().getItems().set(indexToEdit, nome);
+            //MainApp.getTela1View().getRealPresenter().getListviewNomes().getItems().set(indexToEdit, nome);
         }
         textNome.getScene().getWindow().hide();
     }

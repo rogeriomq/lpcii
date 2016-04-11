@@ -3,18 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.edu.unirg.projeto.tela2;
+package br.edu.unirg.projeto.tela1.linelist;
 
 import com.airhacks.afterburner.views.FXMLView;
 
 /**
  *
- * @author man1gold
+ * @author rogerio
  */
-public class Tela2View extends FXMLView {
+public class LinelistView extends FXMLView {
     
-    public Tela2Presenter getRealPresenter() {
-        return (Tela2Presenter) super.getPresenter();
+    public LinelistPresenter getRealPresenter() {
+        return (LinelistPresenter) super.getPresenter();
     }
     
 }

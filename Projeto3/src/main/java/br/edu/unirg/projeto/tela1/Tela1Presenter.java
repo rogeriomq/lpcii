@@ -3,9 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.edu.unirg.projeto2.tela1;
+package br.edu.unirg.projeto.tela1;
 
-import br.edu.unirg.projeto2.tela2.Tela2View;
+import br.edu.unirg.projeto.MainApp;
+import br.edu.unirg.projeto.bean.Agenda;
+import br.edu.unirg.projeto.tela2.Tela2View;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -27,7 +29,7 @@ public class Tela1Presenter implements Initializable {
 
     private ResourceBundle resources = null;
     @FXML
-    private ListView<String> listviewNomes;
+    private ListView<Agenda> listviewNomes;
     @FXML
     private Button btAdd;
     @FXML
@@ -40,8 +42,9 @@ public class Tela1Presenter implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.resources = resources;
+        listviewNomes.setItems(MainApp.getAgendaList());
     }
-@FXML
+    @FXML
     private void addNome(ActionEvent event) {
         try {
             tela2View = new Tela2View();
@@ -63,7 +66,8 @@ public class Tela1Presenter implements Initializable {
             try {
                 tela2View = new Tela2View();
                 tela2View.getRealPresenter().setIndexToEdit(listviewNomes.getSelectionModel().getSelectedIndex());
-                tela2View.getRealPresenter().getTextNome().setText(listviewNomes.getSelectionModel().getSelectedItem());
+                
+                //tela2View.getRealPresenter().getTextNome().setText(listviewNomes.getSelectionModel().getSelectedItem());
                 Scene scene = new Scene(tela2View.getView());
                 Stage stage = new Stage();
                 stage.setTitle("Cadastro Alunos[Edit]");
@@ -87,8 +91,7 @@ public class Tela1Presenter implements Initializable {
         }
     }
 
-    public ListView<String> getListviewNomes() {
+    public ListView<Agenda> getListviewNomes() {
         return listviewNomes;
     }
-    
 }

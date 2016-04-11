@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox fx:id="vboxCell" prefHeight="266.0" prefWidth="427.0" spacing="5.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.unirg.projeto.tela1.linelist.LinelistPresenter">
+   <children>
+      <AnchorPane>
+         <children>
+            <Label fx:id="labelNome" prefHeight="45.0" prefWidth="367.0" text="Label" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="65.0" />
+            <HBox alignment="CENTER" layoutX="369.0" layoutY="3.0" prefHeight="37.0" prefWidth="59.0" spacing="5.0" AnchorPane.rightAnchor="2.0">
+               <children>
+                  <Button alignment="CENTER" mnemonicParsing="false" text="E" />
+                  <Button alignment="CENTER" mnemonicParsing="false" text="X" />
+               </children>
+            </HBox>
+         </children>
+      </AnchorPane>
+      <Label fx:id="labelSobrenome" prefHeight="30.0" prefWidth="427.0" text="Label" />
+      <TitledPane fx:id="paneContatos" animated="false" expanded="false" prefHeight="177.0" prefWidth="427.0" text="Contatos">
+         <content>
+            <VBox prefHeight="114.0" prefWidth="425.0">
+               <children>
+                  <TableView fx:id="tableContatos" prefHeight="200.0" prefWidth="200.0">
+                    <columns>
+                      <TableColumn prefWidth="75.0" text="C1" />
+                      <TableColumn prefWidth="75.0" text="C2" />
+                    </columns>
+                  </TableView>
+               </children>
+            </VBox>
+         </content>
+      </TitledPane>
+   </children>
+</VBox>

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.edu.unirg.projeto2.tela1;
+package br.edu.unirg.projeto.tela1;
 
 import com.airhacks.afterburner.views.FXMLView;
 
