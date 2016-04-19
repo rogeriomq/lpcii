@@ -8,7 +8,10 @@ package br.edu.unirg.projeto.tela1.linelist;
 import br.edu.unirg.projeto.bean.Agenda;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 
 /**
  *
@@ -17,7 +20,14 @@ import javafx.fxml.Initializable;
 public class LinelistPresenter implements Initializable {
 
     private ResourceBundle resources = null;
-    
+    @FXML
+    private Label labelNomeSobrenome;
+    @FXML
+    private Label labelApelido;
+    @FXML
+    private Label labelEndereco;
+    @FXML
+    private Button btDell;
     
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -25,7 +35,9 @@ public class LinelistPresenter implements Initializable {
     }
     
     public void loadObjAgenda(Agenda agenda) {
-        
+        labelNomeSobrenome.setText(agenda.getNome() + " " + agenda.getSobrenome());
+        labelApelido.setText(agenda.getApelido());
+        labelEndereco.setText(agenda.getEndereco());
     }
-    
+
 }

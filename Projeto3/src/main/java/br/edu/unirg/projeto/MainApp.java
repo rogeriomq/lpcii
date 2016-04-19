@@ -4,17 +4,11 @@ import br.edu.unirg.projeto.bean.Agenda;
 import br.edu.unirg.projeto.bean.Contato;
 import br.edu.unirg.projeto.tela1.Tela1View;
 import com.airhacks.afterburner.injection.Injector;
-import com.sun.xml.internal.messaging.saaj.packaging.mime.util.UUEncoderStream;
 import java.sql.Date;
-import java.time.Instant;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.ZoneId;
-import java.time.temporal.TemporalField;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 import java.util.UUID;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
@@ -39,7 +33,7 @@ public class MainApp extends Application {
 
         Contato email = new Contato();
         email.setDescricao("rogerio.mq@gmail.com");
-        email.setPreferencial(true);
+        email.setPreferencial(false);
         email.setTipo(Contato.EMAIL);
         
         Contato celular = new Contato();
@@ -60,7 +54,21 @@ public class MainApp extends Application {
         rogerio.getContatos().add(email);
         rogerio.getContatos().add(celular);
         
+        Agenda x = new Agenda();
+        x.setId(UUID.randomUUID().toString());
+        x.setNome("XXXXXXXXXXXXXXXXXXXx");
+        x.setSobrenome("M. de Queiroz");
+        x.setApelido("xxxxxx");
+        x.setEndereco("xxxxx xxxxxxxxxxx xxxxxxxxxxxx xxxxxxxxxx");
+        x.setAniversario(
+            Date.from(LocalDate.of(1985, Month.SEPTEMBER, 26).atStartOfDay().atZone(ZoneId.systemDefault()).toInstant())
+        );
+        x.setContatos(new ArrayList<>());
+       
+        
         getAgendaList().add(rogerio);
+        getAgendaList().add(x);
+        
     }
     
     

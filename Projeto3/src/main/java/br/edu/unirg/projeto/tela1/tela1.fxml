@@ -6,10 +6,10 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="315.0" stylesheets="@tela1.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.unirg.projeto.tela1.Tela1Presenter">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="530.0" prefWidth="529.0" stylesheets="@tela1.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.unirg.projeto.tela1.Tela1Presenter">
    <children>
       <Label layoutX="12.0" layoutY="6.0" text="Lista de nomes" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="5.0" />
-      <ListView fx:id="listviewNomes" layoutX="12.0" layoutY="28.0" prefHeight="337.0" prefWidth="295.0" AnchorPane.bottomAnchor="38.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="25.0" />
+      <ListView fx:id="listviewNomes" layoutX="12.0" layoutY="28.0" onMouseClicked="#editarNomeClick" prefHeight="337.0" prefWidth="295.0" AnchorPane.bottomAnchor="38.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="25.0" />
       <HBox alignment="CENTER" layoutX="9.0" layoutY="353.0" spacing="10.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
          <children>
             <Button fx:id="btAdd" mnemonicParsing="false" onAction="#addNome" text="Adicionar" />

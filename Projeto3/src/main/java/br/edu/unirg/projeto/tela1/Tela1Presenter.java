@@ -13,12 +13,14 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
+import javafx.event.EventTarget;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 /**
@@ -42,13 +44,14 @@ public class Tela1Presenter implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.resources = resources;
+        listviewNomes.setCellFactory((ListView<Agenda> param) -> new ListViewCellAgenda());
         listviewNomes.setItems(MainApp.getAgendaList());
     }
     @FXML
     private void addNome(ActionEvent event) {
         try {
             tela2View = new Tela2View();
-            tela2View.getRealPresenter().setIndexToEdit(null);
+            tela2View.getRealPresenter().loadAgenda(null, null);
             Scene scene = new Scene(tela2View.getView());
             Stage stage = new Stage();
             stage.setTitle("Cadastro Alunos");
@@ -65,9 +68,8 @@ public class Tela1Presenter implements Initializable {
         if (listviewNomes.getSelectionModel().getSelectedItem() != null) {
             try {
                 tela2View = new Tela2View();
-                tela2View.getRealPresenter().setIndexToEdit(listviewNomes.getSelectionModel().getSelectedIndex());
-                
-                //tela2View.getRealPresenter().getTextNome().setText(listviewNomes.getSelectionModel().getSelectedItem());
+                tela2View.getRealPresenter().loadAgenda(listviewNomes.getSelectionModel().getSelectedItem(), 
+                        listviewNomes.getSelectionModel().getSelectedIndex());
                 Scene scene = new Scene(tela2View.getView());
                 Stage stage = new Stage();
                 stage.setTitle("Cadastro Alunos[Edit]");
@@ -93,5 +95,12 @@ public class Tela1Presenter implements Initializable {
 
     public ListView<Agenda> getListviewNomes() {
         return listviewNomes;
+    }
+
+    @FXML
+    private void editarNomeClick(MouseEvent event) {
+        if(event.getClickCount() == 2) {
+            btEdit.fire();
+        }
     }
 }
