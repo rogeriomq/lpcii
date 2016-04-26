@@ -6,11 +6,14 @@
 package br.edu.unirg.projeto.telaContato;
 
 import br.edu.unirg.projeto.bean.Contato;
+import br.edu.unirg.projeto.tela2.Tela2Presenter;
+import br.edu.unirg.projeto.tela2.Tela2View;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
@@ -23,8 +26,9 @@ import javafx.util.StringConverter;
 public class TelaContatoPresenter implements Initializable {
 
     private ResourceBundle resources = null;
-    private Integer indexTable;
+    private Integer indexTableContato;
     private Contato contato;
+    public Tela2Presenter tela2Presenter;
 
     @FXML
     private ChoiceBox<Integer> choiceTipo;
@@ -58,8 +62,9 @@ public class TelaContatoPresenter implements Initializable {
                     case Contato.SKYPE:
                         texto = "Skype";
                         break;
-                    default: texto = "-------------";
-                    break;
+                    default:
+                        texto = "-------------";
+                        break;
                 }
                 return texto;
             }
@@ -83,22 +88,29 @@ public class TelaContatoPresenter implements Initializable {
                     case "Skype":
                         intContato = Contato.SKYPE;
                         break;
-                    default: intContato = null;
-                    break;
+                    default:
+                        intContato = null;
+                        break;
                 }
                 return intContato;
             }
         });
         contato = null;
-        indexTable = null;
+        indexTableContato = null;
     }
 
     public void loadContato(Contato contatoSelected, int indexTable) {
         this.contato = contatoSelected;
-        this.indexTable = indexTable;
+        this.indexTableContato = indexTable;
         if (contato == null) {
             return;
+        } else { //carregar contato na tela para edição
+            choiceTipo.setValue(contato.getTipo());
+            checkPref.setSelected(contato.isPreferencial());
+            textContato.setText(contato.getDescricao());
+            choiceTipo.requestFocus();
         }
+        
     }
 
     @FXML
@@ -108,6 +120,25 @@ public class TelaContatoPresenter implements Initializable {
 
     @FXML
     private void confirmarContato(ActionEvent event) {
+        if (contato == null) { //caso seja um contato NOVO
+            contato = new Contato();
+            indexTableContato = null;
+        }
+        contato.setTipo(choiceTipo.getValue());
+        contato.setPreferencial(checkPref.isSelected());
+        contato.setDescricao(textContato.getText());
+
+        if (indexTableContato == null) {
+            tela2Presenter.getTableContatos().getItems().add(contato); //inserir na tabela
+        } else {
+            tela2Presenter.getTableContatos().getItems().set(indexTableContato, contato); //atualizar na tabela
+        }
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmação");
+        alert.setHeaderText("Contato registrado!");
+        alert.setContentText("Operação[ok].");
+        alert.show();
+        choiceTipo.getScene().getWindow().hide(); //fechando a tela de contato.
     }
 
 }

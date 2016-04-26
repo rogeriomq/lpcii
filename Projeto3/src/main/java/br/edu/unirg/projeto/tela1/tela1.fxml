@@ -9,12 +9,12 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="530.0" prefWidth="529.0" stylesheets="@tela1.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.unirg.projeto.tela1.Tela1Presenter">
    <children>
       <Label layoutX="12.0" layoutY="6.0" text="Lista de nomes" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="5.0" />
-      <ListView fx:id="listviewNomes" layoutX="12.0" layoutY="28.0" onMouseClicked="#editarNomeClick" prefHeight="337.0" prefWidth="295.0" AnchorPane.bottomAnchor="38.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="25.0" />
-      <HBox alignment="CENTER" layoutX="9.0" layoutY="353.0" spacing="10.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+      <ListView fx:id="listviewNomes" layoutX="12.0" layoutY="28.0" onMouseClicked="#editarNomeClick" prefHeight="446.0" prefWidth="509.0" AnchorPane.bottomAnchor="59.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="25.0" />
+      <HBox alignment="CENTER" layoutX="9.0" layoutY="353.0" prefHeight="49.0" prefWidth="509.0" spacing="10.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
          <children>
-            <Button fx:id="btAdd" mnemonicParsing="false" onAction="#addNome" text="Adicionar" />
-            <Button fx:id="btEdit" mnemonicParsing="false" onAction="#editarNome" text="Editar" />
-            <Button fx:id="btRemove" mnemonicParsing="false" onAction="#removerNome" text="Remover" />
+            <Button fx:id="btAdd" mnemonicParsing="false" onAction="#addNome" prefHeight="40.0" prefWidth="90.0" text="Adicionar" />
+            <Button fx:id="btEdit" mnemonicParsing="false" onAction="#editarNome" prefHeight="40.0" prefWidth="90.0" text="Editar" />
+            <Button fx:id="btRemove" mnemonicParsing="false" onAction="#removerNome" prefHeight="40.0" prefWidth="90.0" text="Remover" />
          </children>
       </HBox>
    </children>

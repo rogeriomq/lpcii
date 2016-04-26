@@ -125,7 +125,7 @@ public class Tela2Presenter implements Initializable {
     }
 
     @FXML
-    private void confirmarNome(ActionEvent event) {
+    private void confirmar(ActionEvent event) {
         Agenda agenda = new Agenda();
         agenda.setContatos(new ArrayList<>());
         agenda.setNome(textNome.getText());
@@ -164,12 +164,14 @@ public class Tela2Presenter implements Initializable {
     @FXML
     private void addContato(ActionEvent event) {
         telaContatoView = new TelaContatoView();
+        telaContatoView.getRealPresenter().tela2Presenter = this;
         Stage st = new Stage(StageStyle.UTILITY);
         st.setTitle("Contato[Novo]");
         st.setScene(new Scene(telaContatoView.getView()));
         st.initOwner(textNome.getScene().getWindow());
         st.initModality(Modality.APPLICATION_MODAL);
         st.show();
+        
     }
 
     @FXML
@@ -178,6 +180,7 @@ public class Tela2Presenter implements Initializable {
             int indexTable = tableContatos.getSelectionModel().getSelectedIndex();
             Contato contatoSelected = tableContatos.getSelectionModel().getSelectedItem();
             telaContatoView = new TelaContatoView();
+            telaContatoView.getRealPresenter().tela2Presenter = this;
             telaContatoView.getRealPresenter().loadContato(contatoSelected, indexTable);
             Stage st = new Stage(StageStyle.UTILITY);
             st.setTitle("Contato[Edit]");
@@ -210,6 +213,10 @@ public class Tela2Presenter implements Initializable {
         }
         tableContatos.setItems(FXCollections.observableArrayList(agenda.getContatos()));
         textNome.requestFocus();
+    }
+    
+    public TableView<Contato> getTableContatos() {
+        return tableContatos;
     }
 
 }

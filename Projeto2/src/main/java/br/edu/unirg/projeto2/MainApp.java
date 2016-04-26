@@ -14,12 +14,12 @@ public class MainApp extends Application {
     public void start(Stage stage) throws Exception {
         tela1View = new Tela1View();
         Scene scene = new Scene(tela1View.getView());
-        stage.setTitle("Cadastro de alunos");
+        stage.setTitle("Cadastro de alunos..");
         stage.setScene(scene);
         stage.show();
     }
-    
-    
+
+
     @Override
     public void stop() throws Exception {
         Injector.forgetAll();
@@ -36,8 +36,8 @@ public class MainApp extends Application {
      *
      * @param args the command line arguments
      */
-    
-    
+
+
     public static void main(String[] args) {
         launch(args);
     }

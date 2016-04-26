@@ -1,22 +1,43 @@
-/*
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
-*/
+.button {
+    -fx-background-radius: 6em;
+}   
+.button:hover {
+    -fx-cursor: hand;
+    -fx-background-size: 30px;
+    -fx-font-size: 11px;
+}
 
-/* 
- * This file can be manually injected into your file tela2.fxml via:
- * 
- * <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.unirg.projeto2.tela2.Tela2Presenter">
- *     <stylesheets>
- *         <URL value="@tela2.css"/>
- *     </stylesheets>
- * </AnchorPane>
- * 
- * The above shown soucecode will be automatically generated if you have the
- * options to create (and to inject) the 'optional' .css file into your 
- * file tela2.fxml selected in the page 'Optional Files'.
- * 
- * Created on : Mar 21, 2016, 9:42:00 PM
- * Author     : man1gold
- */
+#btAddContato{
+    -fx-background-image: url("../images/ic_action_add.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: top center;
+    -fx-alignment: BOTTOM_CENTER;
+}
+
+#btEditContato{
+    -fx-background-image: url("../images/ic_action_edit.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: top center;
+    -fx-alignment: BOTTOM_CENTER;
+}
+
+#btRemoveContato{
+    -fx-background-image: url("../images/ic_action_minus.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: top center;
+    -fx-alignment: BOTTOM_CENTER;
+}
+
+#btCancelarSair{
+    -fx-background-image: url("../images/ic_action_cancel.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: top center;
+    -fx-alignment: BOTTOM_CENTER;
+}
+
+#btConfirmarSair{
+    -fx-background-image: url("../images/ic_action_save.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: top center;
+    -fx-alignment: BOTTOM_CENTER;
+}
