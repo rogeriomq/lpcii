@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-public class Agenda {
+public class Registro {
     private String id;
     private String nome;
     private String sobrenome;
@@ -13,7 +13,7 @@ public class Agenda {
     private String endereco;
     private List<Contato> contatos; 
 
-    public Agenda() {
+    public Registro() {
         
     }
 
@@ -91,7 +91,7 @@ public class Agenda {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Agenda other = (Agenda) obj;
+        final Registro other = (Registro) obj;
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
