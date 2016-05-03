@@ -14,7 +14,7 @@ public class Registro {
     private List<Contato> contatos; 
 
     public Registro() {
-        
+       
     }
 
     public String getId() {

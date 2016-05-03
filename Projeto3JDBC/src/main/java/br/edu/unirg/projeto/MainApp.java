@@ -1,17 +1,11 @@
 package br.edu.unirg.projeto;
 
 import br.edu.unirg.projeto.bean.Registro;
-import br.edu.unirg.projeto.bean.Contato;
+import br.edu.unirg.projeto.conexao.ConexaoDB;
+import br.edu.unirg.projeto.conexao.dao.RegistroDAO;
 import br.edu.unirg.projeto.tela1.Tela1View;
 import com.airhacks.afterburner.injection.Injector;
-import java.sql.Date;
-import java.time.LocalDate;
-import java.time.Month;
-import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.UUID;
 import javafx.application.Application;
-import static javafx.application.Application.launch;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
@@ -26,12 +20,16 @@ public class MainApp extends Application {
     private static ObservableList<Registro> agendaList;
     @Override
     public void start(Stage stage) throws Exception {
+        RegistroDAO registroDAO = new RegistroDAO();
+        
         tela1View = new Tela1View();
         Scene scene = new Scene(tela1View.getView());
-        stage.setTitle("Cadastro de alunos");
+        stage.setTitle("|_AGENDA - REGISTROS_|");
         stage.setScene(scene);
         stage.show();
-
+       
+        getAgendaList().addAll(registroDAO.findAllRegistros());
+        /*
         Contato email = new Contato();
         email.setDescricao("rogerio.mq@gmail.com");
         email.setPreferencial(false);
@@ -69,7 +67,7 @@ public class MainApp extends Application {
         
         getAgendaList().add(rogerio);
         getAgendaList().add(x);
-        
+        */
     }
     
     

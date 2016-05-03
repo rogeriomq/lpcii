@@ -8,6 +8,7 @@ package br.edu.unirg.projeto.tela2;
 import br.edu.unirg.projeto.MainApp;
 import br.edu.unirg.projeto.bean.Registro;
 import br.edu.unirg.projeto.bean.Contato;
+import br.edu.unirg.projeto.conexao.dao.RegistroDAO;
 import br.edu.unirg.projeto.telaContato.TelaContatoView;
 import java.net.URL;
 import java.time.Instant;
@@ -126,24 +127,23 @@ public class Tela2Presenter implements Initializable {
 
     @FXML
     private void confirmar(ActionEvent event) {
-        Registro agenda = new Registro();
-        agenda.setContatos(new ArrayList<>());
-        agenda.setNome(textNome.getText());
-        agenda.setSobrenome(textSobrenome.getText());
-        agenda.setApelido(textApelido.getText());
+        Registro registro = new Registro();
+        if(idAgenda != null) {
+            registro.setId(idAgenda);
+        }
+        registro.setContatos(new ArrayList<>());
+        registro.setNome(textNome.getText());
+        registro.setSobrenome(textSobrenome.getText());
+        registro.setApelido(textApelido.getText());
         if (pickerNasc.getValue() != null) {
             Instant instant = pickerNasc.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant();
-            agenda.setAniversario(Date.from(instant));
+            registro.setAniversario(Date.from(instant));
         }
-        agenda.getContatos().addAll(tableContatos.getItems());
+        registro.getContatos().addAll(tableContatos.getItems());
 
-        if (indexToEdit == null) {
-            agenda.setId(UUID.randomUUID().toString()); //novo Registro
-            MainApp.getAgendaList().add(agenda);
-        } else {
-            agenda.setId(this.idAgenda); //editando
-            MainApp.getAgendaList().set(this.indexToEdit, agenda);
-        }
+        RegistroDAO dao = new RegistroDAO();
+        dao.saveOrUpdate(registro);
+        
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Informação");
         alert.setContentText("Registro gravado com sucesso!");
@@ -211,7 +211,7 @@ public class Tela2Presenter implements Initializable {
             LocalDate ld = LocalDateTime.ofInstant(instant, ZoneId.systemDefault()).toLocalDate();
             pickerNasc.setValue(ld);
         }
-        tableContatos.setItems(FXCollections.observableArrayList(agenda.getContatos()));
+//        tableContatos.setItems(FXCollections.observableArrayList(agenda.getContatos()));
         textNome.requestFocus();
     }
     
