@@ -6,14 +6,15 @@
 package br.edu.unirg.projeto.tela1;
 
 import br.edu.unirg.projeto.MainApp;
+import static br.edu.unirg.projeto.MainApp.getAgendaList;
 import br.edu.unirg.projeto.bean.Registro;
+import br.edu.unirg.projeto.conexao.dao.RegistroDAO;
 import br.edu.unirg.projeto.tela2.Tela2View;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
-import javafx.event.EventTarget;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
@@ -46,7 +47,15 @@ public class Tela1Presenter implements Initializable {
         this.resources = resources;
         listviewNomes.setCellFactory((ListView<Registro> param) -> new ListViewCellAgenda());
         listviewNomes.setItems(MainApp.getAgendaList());
+        loadContatos();
     }
+    
+    private void loadContatos() {
+         RegistroDAO registroDAO = new RegistroDAO();
+         getAgendaList().clear();
+         getAgendaList().addAll(registroDAO.findAllRegistros());
+    }
+    
     @FXML
     private void addNome(ActionEvent event) {
         try {
@@ -56,8 +65,8 @@ public class Tela1Presenter implements Initializable {
             Stage stage = new Stage();
             stage.setTitle("Cadastro Alunos");
             stage.setScene(scene);
-            stage.show();
-
+            stage.showAndWait();
+            loadContatos();
         } catch (Exception ex) {
             Logger.getLogger(Tela1Presenter.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -74,8 +83,8 @@ public class Tela1Presenter implements Initializable {
                 Stage stage = new Stage();
                 stage.setTitle("Cadastro Alunos[Edit]");
                 stage.setScene(scene);
-                stage.show();
-
+                stage.showAndWait();
+                loadContatos();
             } catch (Exception ex) {
                 Logger.getLogger(Tela1Presenter.class.getName()).log(Level.SEVERE, null, ex);
             }

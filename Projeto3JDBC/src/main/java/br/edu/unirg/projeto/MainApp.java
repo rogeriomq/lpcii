@@ -20,15 +20,13 @@ public class MainApp extends Application {
     private static ObservableList<Registro> agendaList;
     @Override
     public void start(Stage stage) throws Exception {
-        RegistroDAO registroDAO = new RegistroDAO();
-        
         tela1View = new Tela1View();
         Scene scene = new Scene(tela1View.getView());
         stage.setTitle("|_AGENDA - REGISTROS_|");
         stage.setScene(scene);
         stage.show();
        
-        getAgendaList().addAll(registroDAO.findAllRegistros());
+        
         /*
         Contato email = new Contato();
         email.setDescricao("rogerio.mq@gmail.com");

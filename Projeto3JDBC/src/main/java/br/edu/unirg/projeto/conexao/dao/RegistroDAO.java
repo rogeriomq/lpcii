@@ -21,7 +21,8 @@ public class RegistroDAO {
         List<Registro> lista = new ArrayList<>();
         String sql = "SELECT * FROM REGISTRO R ORDER BY R.NOME";
         try {
-            ResultSet rs = conexao.connect().createStatement().executeQuery(sql);
+            Statement st = conexao.connect().createStatement();
+            ResultSet rs = st.executeQuery(sql);
             while (rs.next()) {
                 Registro reg = new Registro();
                 reg.setId(rs.getString("ID"));
@@ -32,6 +33,7 @@ public class RegistroDAO {
                 reg.setEndereco(rs.getString("ENDERECO"));
                 lista.add(reg);
             }
+            st.close();
         } catch (SQLException ex) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
         }
@@ -69,6 +71,7 @@ public class RegistroDAO {
             int result = ps.executeUpdate();
             System.out.println("RESULT EXEC SQL= " + result);
             pkReturn = p.getId();
+            ps.close();
         } catch (SQLException ex) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
         }
@@ -105,7 +108,7 @@ public class RegistroDAO {
                 System.out.println("ID REGISTRO = " + p.getId());
                 //insert Caso o ID seja null, então passo um randomUUID() para o novo contato. 
                 //Operador ternário aqui é uma ótima alternativa.
-                 ps.setString(1, p.getNome());
+                ps.setString(1, p.getNome());
                 ps.setString(2, p.getSobrenome());
                 ps.setString(3, p.getApelido());
                 ps.setDate(4, (p.getAniversario() != null ? new java.sql.Date(p.getAniversario().getTime()) : null));
@@ -123,4 +126,44 @@ public class RegistroDAO {
         return pkReturn;
     }
 
+    public int delete(String id) {
+        int result = 0;
+        conexao = new ConexaoDB();
+        String sql = "DELETE FROM REGISTRO R WHERE R.ID = ?";
+        try {
+            PreparedStatement ps = conexao.connect()
+                    .prepareStatement(sql);
+            ps.setString(1, id);
+            result = ps.executeUpdate();
+            ps.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
+        }
+        return result;
+    }
+
+    public Registro findById(String id) {
+        conexao = new ConexaoDB();
+        Registro reg = new Registro();
+        String sql = "SELECT * FROM REGISTRO R WHERE R.ID = ?";
+        try {
+            PreparedStatement ps = conexao.connect().prepareStatement(sql);
+            ps.setString(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.first()) {
+                reg.setId(rs.getString("ID"));
+                reg.setNome(rs.getString("NOME"));
+                reg.setSobrenome(rs.getString("SOBRENOME"));
+                reg.setAniversario(rs.getDate("ANIVERSARIO"));
+                reg.setApelido(rs.getString("APELIDO"));
+                reg.setEndereco(rs.getString("ENDERECO"));
+            } else {
+                reg = null;
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
+        }
+        return reg;
+    }
 }
