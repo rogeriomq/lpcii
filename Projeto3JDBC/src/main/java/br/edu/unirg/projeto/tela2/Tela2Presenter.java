@@ -148,9 +148,7 @@ public class Tela2Presenter implements Initializable {
         alert.setTitle("Informação");
         alert.setContentText("Registro gravado com sucesso!");
         alert.showAndWait();
-        MainApp.getTela1View().getRealPresenter()
-                .getListviewNomes()
-                .getSelectionModel().clearSelection();
+        
         this.idAgenda = null;
         this.indexToEdit = null;
         textNome.getScene().getWindow().hide();
