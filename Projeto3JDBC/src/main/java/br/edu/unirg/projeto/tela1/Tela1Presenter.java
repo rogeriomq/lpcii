@@ -14,6 +14,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -39,9 +40,9 @@ public class Tela1Presenter implements Initializable {
     private Button btEdit;
     @FXML
     private Button btRemove;
-    
+
     private Tela2View tela2View;
-    
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.resources = resources;
@@ -49,13 +50,20 @@ public class Tela1Presenter implements Initializable {
         listviewNomes.setItems(MainApp.getAgendaList());
         loadContatos();
     }
-    
+
     private void loadContatos() {
-         RegistroDAO registroDAO = new RegistroDAO();
-         getAgendaList().clear();
-         getAgendaList().addAll(registroDAO.findAllRegistros());
+        RegistroDAO registroDAO = new RegistroDAO();
+        getAgendaList().clear();
+        getAgendaList().addAll(registroDAO.findAllRegistros());
     }
-    
+
+    private void reorderListAgendaByName() {
+        SortedList listaOrdenada = MainApp.getAgendaList()
+            .sorted((Registro o1, Registro o2) -> 
+                o1.getNome().compareToIgnoreCase(o2.getNome()));
+        MainApp.getAgendaList().setAll(listaOrdenada);
+    }
+
     @FXML
     private void addNome(ActionEvent event) {
         try {
@@ -66,7 +74,8 @@ public class Tela1Presenter implements Initializable {
             stage.setTitle("Cadastro Alunos");
             stage.setScene(scene);
             stage.showAndWait();
-            loadContatos();
+            //loadContatos();
+            reorderListAgendaByName();
         } catch (Exception ex) {
             Logger.getLogger(Tela1Presenter.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -77,14 +86,15 @@ public class Tela1Presenter implements Initializable {
         if (listviewNomes.getSelectionModel().getSelectedItem() != null) {
             try {
                 tela2View = new Tela2View();
-                tela2View.getRealPresenter().loadAgenda(listviewNomes.getSelectionModel().getSelectedItem(), 
+                tela2View.getRealPresenter().loadAgenda(listviewNomes.getSelectionModel().getSelectedItem(),
                         listviewNomes.getSelectionModel().getSelectedIndex());
                 Scene scene = new Scene(tela2View.getView());
                 Stage stage = new Stage();
                 stage.setTitle("Cadastro Alunos[Edit]");
                 stage.setScene(scene);
                 stage.showAndWait();
-                loadContatos();
+                // loadContatos(); //Sempre pesquisa todos no banco
+                reorderListAgendaByName(); //Apenas reordena alfabeticamente.
             } catch (Exception ex) {
                 Logger.getLogger(Tela1Presenter.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -108,7 +118,7 @@ public class Tela1Presenter implements Initializable {
 
     @FXML
     private void editarNomeClick(MouseEvent event) {
-        if(event.getClickCount() == 2) {
+        if (event.getClickCount() == 2) {
             btEdit.fire();
         }
     }

@@ -8,6 +8,7 @@ package br.edu.unirg.projeto.tela2;
 import br.edu.unirg.projeto.MainApp;
 import br.edu.unirg.projeto.bean.Registro;
 import br.edu.unirg.projeto.bean.Contato;
+import br.edu.unirg.projeto.conexao.dao.ContatoDAO;
 import br.edu.unirg.projeto.conexao.dao.RegistroDAO;
 import br.edu.unirg.projeto.telaContato.TelaContatoView;
 import java.net.URL;
@@ -16,10 +17,13 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.UUID;
 import javafx.collections.FXCollections;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -144,10 +148,19 @@ public class Tela2Presenter implements Initializable {
         RegistroDAO dao = new RegistroDAO();
         dao.saveOrUpdate(registro);
         
+        if(idAgenda != null) {
+            //Editei um registro, atualizar no listview Tela1
+            MainApp.getAgendaList().set(indexToEdit, registro);
+        } else {
+            //novo registro, adicionar no listview Tela1
+            MainApp.getAgendaList().add(registro);
+        }
+        
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Informação");
         alert.setContentText("Registro gravado com sucesso!");
         alert.showAndWait();
+        
         
         this.idAgenda = null;
         this.indexToEdit = null;
@@ -209,7 +222,10 @@ public class Tela2Presenter implements Initializable {
             LocalDate ld = LocalDateTime.ofInstant(instant, ZoneId.systemDefault()).toLocalDate();
             pickerNasc.setValue(ld);
         }
-//        tableContatos.setItems(FXCollections.observableArrayList(agenda.getContatos()));
+        ContatoDAO contatoDAO = new ContatoDAO();
+        List<Contato> listContatos = contatoDAO.findAllContatos(idAgenda);
+        
+        tableContatos.setItems(FXCollections.observableArrayList(listContatos));
         textNome.requestFocus();
     }
     
