@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.UUID;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -50,6 +51,7 @@ public class Tela2Presenter implements Initializable {
     private ResourceBundle resources = null;
     private Integer indexToEdit;
     private String idAgenda;
+    private ObservableList<Contato> obsListContatos;
     private TelaContatoView telaContatoView;
     @FXML
     private TextField textNome;
@@ -71,6 +73,8 @@ public class Tela2Presenter implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.resources = resources;
+        obsListContatos = FXCollections.observableArrayList();
+        tableContatos.setItems(obsListContatos);
         setupTableContatos();
     }
 
@@ -135,7 +139,6 @@ public class Tela2Presenter implements Initializable {
         if(idAgenda != null) {
             registro.setId(idAgenda);
         }
-        registro.setContatos(new ArrayList<>());
         registro.setNome(textNome.getText());
         registro.setSobrenome(textSobrenome.getText());
         registro.setApelido(textApelido.getText());
@@ -143,11 +146,17 @@ public class Tela2Presenter implements Initializable {
             Instant instant = pickerNasc.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant();
             registro.setAniversario(Date.from(instant));
         }
-        registro.getContatos().addAll(tableContatos.getItems());
+        //registro.getContatos().addAll(tableContatos.getItems());
 
         RegistroDAO dao = new RegistroDAO();
-        dao.saveOrUpdate(registro);
-        
+        String id = dao.saveOrUpdate(registro);
+        System.out.println("################ REGISTRO ID: " + id);
+        ContatoDAO contatoDAO = new ContatoDAO();
+        obsListContatos.stream().forEach((x) -> {
+            x.setRegistro_id(id);//
+            contatoDAO.saveOrUpdate(x);
+        });
+ 
         if(idAgenda != null) {
             //Editei um registro, atualizar no listview Tela1
             MainApp.getAgendaList().set(indexToEdit, registro);
@@ -175,14 +184,13 @@ public class Tela2Presenter implements Initializable {
     @FXML
     private void addContato(ActionEvent event) {
         telaContatoView = new TelaContatoView();
-        telaContatoView.getRealPresenter().tela2Presenter = this;
+        telaContatoView.getRealPresenter().loadContato(null, null, obsListContatos, idAgenda);
         Stage st = new Stage(StageStyle.UTILITY);
         st.setTitle("Contato[Novo]");
         st.setScene(new Scene(telaContatoView.getView()));
         st.initOwner(textNome.getScene().getWindow());
         st.initModality(Modality.APPLICATION_MODAL);
-        st.show();
-        
+        st.show();        
     }
 
     @FXML
@@ -191,8 +199,7 @@ public class Tela2Presenter implements Initializable {
             int indexTable = tableContatos.getSelectionModel().getSelectedIndex();
             Contato contatoSelected = tableContatos.getSelectionModel().getSelectedItem();
             telaContatoView = new TelaContatoView();
-            telaContatoView.getRealPresenter().tela2Presenter = this;
-            telaContatoView.getRealPresenter().loadContato(contatoSelected, indexTable);
+            telaContatoView.getRealPresenter().loadContato(contatoSelected, indexTable, obsListContatos, idAgenda);
             Stage st = new Stage(StageStyle.UTILITY);
             st.setTitle("Contato[Edit]");
             st.setScene(new Scene(telaContatoView.getView()));
@@ -204,6 +211,13 @@ public class Tela2Presenter implements Initializable {
 
     @FXML
     private void removeContato(ActionEvent event) {
+        Contato toRemove = tableContatos.getSelectionModel().getSelectedItem();
+        if(toRemove != null) {
+            ContatoDAO contatoDAO = new ContatoDAO();
+            // se tem no banco, remove do banco
+            contatoDAO.delete(toRemove.getId());
+            obsListContatos.remove(toRemove);
+        }
     }
 
     public void loadAgenda(Registro agenda, Integer indexToEdit) {
@@ -224,8 +238,8 @@ public class Tela2Presenter implements Initializable {
         }
         ContatoDAO contatoDAO = new ContatoDAO();
         List<Contato> listContatos = contatoDAO.findAllContatos(idAgenda);
-        
-        tableContatos.setItems(FXCollections.observableArrayList(listContatos));
+        obsListContatos.clear();
+        obsListContatos.setAll(listContatos);
         textNome.requestFocus();
     }
     

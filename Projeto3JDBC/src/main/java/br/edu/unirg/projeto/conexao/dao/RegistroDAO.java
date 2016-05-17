@@ -54,7 +54,8 @@ public class RegistroDAO {
             System.out.println("ID REGISTRO = " + p.getId());
             //insert Caso o ID seja null, então passo um randomUUID() para o novo contato. 
             //Operador ternário aqui é uma ótima alternativa.
-            ps.setString(1, p.getId() == null ? UUID.randomUUID().toString() : p.getId());//Id somente no insert
+            p.setId( p.getId() == null ? UUID.randomUUID().toString() : p.getId());
+            ps.setString(1, p.getId());
             ps.setString(2, p.getNome());
             ps.setString(3, p.getSobrenome());
             ps.setString(4, p.getApelido());
@@ -129,9 +130,14 @@ public class RegistroDAO {
     public int delete(String id) {
         int result = 0;
         conexao = new ConexaoDB();
-        String sql = "DELETE FROM REGISTRO R WHERE R.ID = ?";
+        String sql = "DELETE FROM REGISTRO WHERE ID = ?";
+        String sqlRemoveContatos = "DELETE FROM CONTATO WHERE REGISTRO_ID = ?";
         try {
             PreparedStatement ps = conexao.connect()
+                    .prepareStatement(sqlRemoveContatos);
+            ps.setString(1, id);
+            result = ps.executeUpdate();
+            conexao.connect()
                     .prepareStatement(sql);
             ps.setString(1, id);
             result = ps.executeUpdate();

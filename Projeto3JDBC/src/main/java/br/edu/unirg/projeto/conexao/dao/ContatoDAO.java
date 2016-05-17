@@ -19,7 +19,7 @@ public class ContatoDAO {
     public List<Contato> findAllContatos(String idRegistro) {
         conexao = new ConexaoDB();
         List<Contato> lista = new ArrayList<>();
-        String sql = "SELECT * FROM CONTATO R WHERE R.REGISTRO_ID = ? ORDER BY R.DESCRICAO ";
+        String sql = "SELECT * FROM CONTATO R WHERE R.REGISTRO_ID = ? ORDER BY R.DESCRICAO";
         try {
             PreparedStatement ps = conexao.connect().prepareStatement(sql);
             ps.setString(1, idRegistro);
@@ -27,11 +27,10 @@ public class ContatoDAO {
             while (rs.next()) {
                 Contato reg = new Contato();
                 reg.setId(rs.getString("ID"));
-                reg.setNome(rs.getString("NOME"));
-                reg.setSobrenome(rs.getString("SOBRENOME"));
-                reg.setAniversario(rs.getDate("ANIVERSARIO"));
-                reg.setApelido(rs.getString("APELIDO"));
-                reg.setEndereco(rs.getString("ENDERECO"));
+                reg.setTipo(rs.getInt("TIPO"));
+                reg.setDescricao(rs.getString("DESCRICAO"));
+                reg.setPreferencial(rs.getBoolean("PREFERENCIAL"));
+                reg.setRegistro_id(rs.getString("REGISTRO_ID"));
                 lista.add(reg);
             }
             ps.close();
@@ -43,31 +42,29 @@ public class ContatoDAO {
 
     public String saveOrUpdate(Contato p) { // COM ON DUPLICATE KEY, APENAS NO MYSQL E NO MARIADB
         conexao = new ConexaoDB();
-        String camposNaoChave = "NOME = ?, SOBRENOME = ?, APELIDO = ?, ANIVERSARIO = ?, ENDERECO = ?";
+        String camposNaoChave = "TIPO = ?, DESCRICAO = ?, PREFERENCIAL = ?, REGISTRO_ID = ?";
 
-        String sqlInsertOrUpdate = "INSERT INTO REGISTRO SET ID = ?," + camposNaoChave + " ON DUPLICATE KEY UPDATE " + camposNaoChave;
+        String sqlInsertOrUpdate = "INSERT INTO CONTATO SET ID = ?," + camposNaoChave + 
+                " ON DUPLICATE KEY UPDATE " + camposNaoChave;
         //tanto no insert quanto no update, vai ser retornado o ID, caso o ID seja nulo, é pq o SQL nao foi realmente executado.
         String pkReturn = null;
         try {
             PreparedStatement ps = conexao.connect()
                     .prepareStatement(sqlInsertOrUpdate,
                             Statement.RETURN_GENERATED_KEYS);
-            System.out.println("ID REGISTRO = " + p.getId());
+            System.out.println("ID CONTATO = " + p.getId());
             //insert Caso o ID seja null, então passo um randomUUID() para o novo contato. 
             //Operador ternário aqui é uma ótima alternativa.
             ps.setString(1, p.getId() == null ? UUID.randomUUID().toString() : p.getId());//Id somente no insert
-            ps.setString(2, p.getNome());
-            ps.setString(3, p.getSobrenome());
-            ps.setString(4, p.getApelido());
-            ps.setDate(5, (p.getAniversario() != null ? new java.sql.Date(p.getAniversario().getTime()) : null));
-            ps.setString(6, p.getEndereco());
+            ps.setInt(2, p.getTipo());
+            ps.setString(3, p.getDescricao());
+            ps.setBoolean(4, p.isPreferencial());
+            ps.setString(5, p.getRegistro_id());
             //update
-            ps.setString(7, p.getNome());
-            ps.setString(8, p.getSobrenome());
-            ps.setString(9, p.getApelido());
-            ps.setDate(10, (p.getAniversario() != null ? new java.sql.Date(p.getAniversario().getTime()) : null));
-            ps.setString(11, p.getEndereco());
-
+            ps.setInt(6, p.getTipo());
+            ps.setString(7, p.getDescricao());
+            ps.setBoolean(8, p.isPreferencial());
+            ps.setString(9, p.getRegistro_id());
             System.out.println("SQL= " + ps.toString());
             int result = ps.executeUpdate();
             System.out.println("RESULT EXEC SQL= " + result);
@@ -105,11 +102,10 @@ public class ContatoDAO {
             ResultSet rs = ps.executeQuery();
             if (rs.first()) {
                 reg.setId(rs.getString("ID"));
-                reg.setNome(rs.getString("NOME"));
-                reg.setSobrenome(rs.getString("SOBRENOME"));
-                reg.setAniversario(rs.getDate("ANIVERSARIO"));
-                reg.setApelido(rs.getString("APELIDO"));
-                reg.setEndereco(rs.getString("ENDERECO"));
+                reg.setTipo(rs.getInt("TIPO"));
+                reg.setDescricao(rs.getString("DESCRICAO"));
+                reg.setPreferencial(rs.getBoolean("PREFERENCIAL"));
+                reg.setRegistro_id(rs.getString("REGISTRO_ID"));
             } else {
                 reg = null;
             }

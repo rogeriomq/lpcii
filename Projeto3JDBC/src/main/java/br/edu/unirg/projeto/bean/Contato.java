@@ -1,10 +1,12 @@
 package br.edu.unirg.projeto.bean;
 
-public class Contato extends TipoContato{
+public class Contato extends TipoContato {
+
     private String id;
     private int tipo;
     private String descricao;
     private boolean preferencial;
+    private String registro_id;
 
     public Contato() {
     }
@@ -16,7 +18,7 @@ public class Contato extends TipoContato{
     public void setId(String id) {
         this.id = id;
     }
-    
+
     public int getTipo() {
         return tipo;
     }
@@ -41,12 +43,16 @@ public class Contato extends TipoContato{
         this.preferencial = preferencial;
     }
 
+    public String getRegistro_id() {
+        return registro_id;
+    }
+
+    public void setRegistro_id(String registro_id) {
+        this.registro_id = registro_id;
+    }
+
     @Override
     public String toString() {
-        return "Contato{" + "id=" + id + ", tipo=" + tipo + ", descricao=" + descricao + ", preferencial=" + preferencial + '}';
+        return "Contato{" + "id=" + id + ", tipo=" + tipo + ", descricao=" + descricao + ", preferencial=" + preferencial + ", registro_id=" + registro_id + '}';
     }
-    
-   
-    
-    
 }

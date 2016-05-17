@@ -6,10 +6,9 @@
 package br.edu.unirg.projeto.telaContato;
 
 import br.edu.unirg.projeto.bean.Contato;
-import br.edu.unirg.projeto.tela2.Tela2Presenter;
-import br.edu.unirg.projeto.tela2.Tela2View;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -28,7 +27,8 @@ public class TelaContatoPresenter implements Initializable {
     private ResourceBundle resources = null;
     private Integer indexTableContato;
     private Contato contato;
-    public Tela2Presenter tela2Presenter;
+    private ObservableList<Contato> contatos;
+    private String registroId;
 
     @FXML
     private ChoiceBox<Integer> choiceTipo;
@@ -99,9 +99,12 @@ public class TelaContatoPresenter implements Initializable {
         indexTableContato = null;
     }
 
-    public void loadContato(Contato contatoSelected, int indexTable) {
+    public void loadContato(Contato contatoSelected, Integer indexTable,
+            ObservableList<Contato> contatos, String registroId) {
         this.contato = contatoSelected;
         this.indexTableContato = indexTable;
+        this.registroId = registroId;
+        this.contatos = contatos;
         if (contato == null) {
             return;
         } else { //carregar contato na tela para edição
@@ -110,7 +113,7 @@ public class TelaContatoPresenter implements Initializable {
             textContato.setText(contato.getDescricao());
             choiceTipo.requestFocus();
         }
-        
+
     }
 
     @FXML
@@ -127,11 +130,11 @@ public class TelaContatoPresenter implements Initializable {
         contato.setTipo(choiceTipo.getValue());
         contato.setPreferencial(checkPref.isSelected());
         contato.setDescricao(textContato.getText());
-
+        contato.setRegistro_id(registroId);
         if (indexTableContato == null) {
-            tela2Presenter.getTableContatos().getItems().add(contato); //inserir na tabela
+            contatos.add(contato); //inserir na tabela
         } else {
-            tela2Presenter.getTableContatos().getItems().set(indexTableContato, contato); //atualizar na tabela
+            contatos.set(indexTableContato, contato); //atualizar na tabela
         }
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmação");

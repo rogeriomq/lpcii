@@ -104,6 +104,9 @@ public class Tela1Presenter implements Initializable {
     @FXML
     private void removerNome(ActionEvent event) {
         if (listviewNomes.getSelectionModel().getSelectedItem() != null) {
+            RegistroDAO registroDAO = new RegistroDAO();
+            registroDAO.delete(listviewNomes.getSelectionModel().
+                    getSelectedItem().getId());
             listviewNomes.getItems().remove(listviewNomes.getSelectionModel().getSelectedIndex());
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Resultado");
