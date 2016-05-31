@@ -1,10 +1,9 @@
-.button {
-    -fx-background-radius: 6em;
-}   
-.button:hover {
-    -fx-cursor: hand;
-    -fx-background-size: 30px;
-    -fx-font-size: 11px;
+
+
+.labelLista {
+    -fx-underline: true;
+    -fx-font-size: 18px;
+    -fx-text-fill: cadetblue;
 }
 
 #btAdd{

@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.2.final using JasperReports Library version 6.2.2  -->
+<!-- 2016-05-30T22:03:44 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TodosAgenda" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b773fb5a-0456-46b6-ab2b-e63eaa5b88bc">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="AGENDA-LPCII-PROJETO3JDBC"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="SUBTITULO" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA["SUBTÍTULO DO RELATÓRIO"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT 
+	R.ID AS R_ID, 
+	R.NOME AS R_NOME  ,
+	R.SOBRENOME AS R_SOBRENOME,
+	R.APELIDO AS R_APELIDO,
+	C.ID AS C_ID,
+	C.TIPO AS TIPO,
+	C.DESCRICAO AS C_DESCRICAO,
+	C.PREFERENCIAL AS C_PREF
+FROM REGISTRO  R
+LEFT JOIN CONTATO C ON R.ID = C.REGISTRO_ID
+ORDER BY R.NOME]]>
+	</queryString>
+	<field name="R_ID" class="java.lang.String"/>
+	<field name="R_NOME" class="java.lang.String"/>
+	<field name="R_SOBRENOME" class="java.lang.String"/>
+	<field name="R_APELIDO" class="java.lang.String"/>
+	<field name="C_ID" class="java.lang.String"/>
+	<field name="TIPO" class="java.lang.Integer"/>
+	<field name="C_DESCRICAO" class="java.lang.String"/>
+	<field name="C_PREF" class="java.lang.Integer"/>
+	<group name="REGISTRO">
+		<groupExpression><![CDATA[$F{R_ID}]]></groupExpression>
+		<groupHeader>
+			<band height="36">
+				<textField>
+					<reportElement x="0" y="0" width="180" height="15" uuid="0e1b297e-b535-4b41-9582-ee88b41a81ba">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{R_NOME}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="10" y="20" width="100" height="16" uuid="14c0b685-1c72-4cf9-a24f-1810b9def089">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Contatos]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="550" height="78" uuid="f47ce78a-3810-41a0-8231-5931fb0285c7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="40"/>
+				</textElement>
+				<text><![CDATA[Agenda(lpcII-Projeto3JDB)]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="30" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="550" height="30" forecolor="#315985" uuid="37e5ba7b-2e5a-457e-bd8b-90de2d8b77ee"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="22" isBold="true"/>
+					<paragraph lineSpacing="Double"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{SUBTITULO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="18" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="16" uuid="3f2c0a9e-ccc7-4534-ac46-6128e90254a9">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOME]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="17" width="555" height="1" uuid="6b22a68b-5257-4b24-9e1e-177a9b8328b7"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="31" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="30" width="555" height="1" uuid="c535e9a8-21d5-40e7-92cb-e0672b782159"/>
+			</line>
+			<textField>
+				<reportElement x="30" y="0" width="100" height="30" uuid="a77bf594-70c8-4bbb-a53f-58a89c2595b0"/>
+				<textFieldExpression><![CDATA[$F{TIPO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="30" height="30" uuid="6ecb9c8e-652e-43db-9b0b-2643a77a6c8f"/>
+				<text><![CDATA[TIPO]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="202" y="0" width="198" height="30" uuid="7af12296-3168-4779-936e-712e0afeeac8"/>
+				<textFieldExpression><![CDATA[$F{C_DESCRICAO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="130" y="0" width="70" height="30" uuid="55b14f60-9092-4056-8117-df777275a8a2"/>
+				<text><![CDATA[DESCRIÇÃO]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="28" splitType="Stretch">
+			<staticText>
+				<reportElement x="160" y="4" width="100" height="20" uuid="1afa9231-2daf-4f0d-9069-7e04abb409e8"/>
+				<text><![CDATA[GROUP FOOTER]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField>
+				<reportElement x="170" y="20" width="100" height="30" uuid="b2da5660-33dd-4bac-9028-1768a1c834b6"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Página " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="270" y="20" width="100" height="30" uuid="7a970e97-4918-4922-adf3-57f74acbc28a"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[" de " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

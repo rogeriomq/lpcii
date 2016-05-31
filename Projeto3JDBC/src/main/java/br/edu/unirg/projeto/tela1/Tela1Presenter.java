@@ -8,9 +8,14 @@ package br.edu.unirg.projeto.tela1;
 import br.edu.unirg.projeto.MainApp;
 import static br.edu.unirg.projeto.MainApp.getAgendaList;
 import br.edu.unirg.projeto.bean.Registro;
+import br.edu.unirg.projeto.conexao.ConexaoDB;
 import br.edu.unirg.projeto.conexao.dao.RegistroDAO;
 import br.edu.unirg.projeto.tela2.Tela2View;
+import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,6 +29,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -123,6 +132,27 @@ public class Tela1Presenter implements Initializable {
     private void editarNomeClick(MouseEvent event) {
         if (event.getClickCount() == 2) {
             btEdit.fire();
+        }
+    }
+
+    @FXML
+    private void gerarRelatorio(ActionEvent event) {
+        Map parametros = new HashMap();
+        parametros.put("SUBTITULO", "LISTA DE CONTATOS");
+        try {
+            URL url = this.getClass().getResource("/br/edu/unirg/projeto/reports/TodosAgenda.jasper");
+            System.out.println("URL:" + url);
+            JasperPrint jasperPrint = JasperFillManager.fillReport(
+                    url.openStream(), 
+                    parametros, 
+                    new ConexaoDB().connect()
+            );
+            JasperViewer jasperViewer = new JasperViewer(jasperPrint, false, new Locale("pt", "br"));
+            jasperViewer.setTitle("LISTA DE CONTATOS - PROJETO EXEMPLO(AGENDA)");
+            jasperViewer.setDefaultCloseOperation(JasperViewer.DISPOSE_ON_CLOSE);
+            jasperViewer.setVisible(true);
+        } catch(IOException | JRException ex) {
+            ex.printStackTrace();
         }
     }
 }
